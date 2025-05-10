@@ -3,13 +3,19 @@
 // Smooth Scroll for navigation links
 document.querySelectorAll('nav ul li a').forEach(anchor => {
   anchor.addEventListener('click', function (e) {
-    e.preventDefault();
-    document.querySelector(this.getAttribute('href')).scrollIntoView({
-      behavior: 'smooth',
-      block: 'start'
-    });
+    const target = this.getAttribute('href');
+
+    // Allow external pages to load normally
+    if (!target.includes('.html')) {
+      e.preventDefault();
+      document.querySelector(target).scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
   });
 });
+
 
 // Form Validation for the contact form
 const form = document.querySelector('form');
@@ -33,4 +39,12 @@ window.addEventListener('load', () => {
   document.body.style.opacity = 0;
   document.body.style.transition = 'opacity 1s';
   document.body.style.opacity = 1;
+});
+document.addEventListener('DOMContentLoaded', () => {
+  const links = document.querySelectorAll('nav a');
+  links.forEach(link => {
+    if (link.href === window.location.href) {
+      link.classList.add('active');
+    }
+  });
 });
